@@ -7,6 +7,7 @@ import { defineLocale} from 'ngx-bootstrap/chronos';
 import { BsLocaleService} from 'ngx-bootstrap/datepicker';
 import { ptBrLocale} from 'ngx-bootstrap/chronos';
 import { templateJitUrl, Identifiers } from '@angular/compiler';
+import { ToastrService } from 'ngx-toastr';
 defineLocale('pt-br', ptBrLocale);
 
 
@@ -16,6 +17,7 @@ defineLocale('pt-br', ptBrLocale);
   styleUrls: ['./eventos.component.css']
 })
 export class EventosComponent implements OnInit {
+  titulo = 'Eventos';
   eventosFiltrados: Evento[];
   eventos: Evento[];
   evento: Evento;
@@ -31,7 +33,9 @@ export class EventosComponent implements OnInit {
     private eventoService: EventoService,
     private modalService: BsModalService,
     private fb: FormBuilder,
-    private localeService: BsLocaleService
+    private localeService: BsLocaleService,
+    // tslint:disable-next-line: align
+    private toastr: ToastrService
     ) {
       this.localeService.use('pt-br');
     }
@@ -65,7 +69,9 @@ export class EventosComponent implements OnInit {
         () => {
             template.hide();
             this.getEventos();
+            this.toastr.success('Deletado com sucesso');
           }, error => {
+            this.toastr.error('Error ao tentar deletar');
             console.log(error);
           }
       );
@@ -113,8 +119,9 @@ export class EventosComponent implements OnInit {
               (novoEvento: Evento) => {
                 template.hide();
                 this.getEventos();
+                this.toastr.success('Inserido com sucesso');
               }, error => {
-                console.log(error);
+                this.toastr.error(`Error ao inserir: ${error}`);
               }
               );
             } else {
@@ -123,8 +130,9 @@ export class EventosComponent implements OnInit {
                 () => {
                   template.hide();
                   this.getEventos();
+                  this.toastr.success('Editado com sucesso');
                 }, error => {
-                  console.log(error);
+                  this.toastr.error(`Error ao editar: ${error}`);
                 }
                 );
               }
@@ -140,9 +148,9 @@ export class EventosComponent implements OnInit {
                 this.eventos = _eventos;
                 this.eventosFiltrados = this.eventos;
                 // tslint:disable-next-line: no-unused-expression
-                console.log(_eventos);
+
               }, error => {
-                console.log(error);
+                this.toastr.error(`Error ao Carregar eventos: ${error}`);
               }
 
               );
