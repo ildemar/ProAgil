@@ -177,12 +177,14 @@ export class EventosComponent implements OnInit {
 
           getEventos()
           {
+            this.dataAtual = new Date().getMilliseconds().toString();
             // tslint:disable-next-line: deprecation
             this.eventoService.getAllEvento().subscribe(
               // tslint:disable-next-line: variable-name
               (_eventos: Evento[]) => {
                 this.eventos = _eventos;
                 this.eventosFiltrados = this.eventos;
+                console.log(this.eventos);
                 // tslint:disable-next-line: no-unused-expression
 
               }, error => {

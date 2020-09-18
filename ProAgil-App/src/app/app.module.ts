@@ -6,8 +6,10 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AppRoutingModule } from './app-routing.module';
-
+import { NgxMaskModule} from 'ngx-mask';
+import { NgxCurrencyModule } from 'ngx-currency';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
@@ -17,6 +19,7 @@ import { EventoService } from './_services/evento.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { EventosComponent } from './eventos/eventos.component';
+import { EventoEditComponent } from './eventos/eventoEdit/eventoEdit.component';
 import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContatosComponent } from './contatos/contatos.component';
@@ -33,11 +36,13 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { AuthInterceptor } from './auth/auth.interceptor';
 
 
+
 @NgModule({
-   declarations: [	
+   declarations: [
       AppComponent,
       NavComponent,
       EventosComponent,
+      EventoEditComponent,
       PalestrantesComponent,
       DashboardComponent,
       ContatosComponent,
@@ -45,7 +50,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      DateTimeFormatPipePipe
+      DateTimeFormatPipePipe,
+      EventoEditComponent
    ],
    imports: [
       BrowserModule,
@@ -57,6 +63,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
       ToastrModule.forRoot({timeOut: 10000,
          positionClass: 'toast-bottom-right',
          preventDuplicates: true, }),
+      TabsModule.forRoot(),
+      NgxMaskModule.forRoot(),
+      NgxCurrencyModule,
       AppRoutingModule,
       HttpClientModule,
       FormsModule,
@@ -65,7 +74,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
    providers: [
       EventoService,
       {
-         provide: HTTP_INTERCEPTORS, 
+         provide: HTTP_INTERCEPTORS,
          useClass: AuthInterceptor,
          multi: true
       }],
